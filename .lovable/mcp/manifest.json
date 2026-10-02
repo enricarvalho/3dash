@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "3d-create-mcp",
+      "version": "0.1.0",
+      "title": "3D Create MCP"
+    },
+    "tools": [
+      {
+        "name": "get_company_info",
+        "title": "Informações da 3D Create",
+        "description": "Retorna dados públicos da 3D Create: nome, slogan, localização, serviços oferecidos e canais de contato.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_services",
+        "title": "Listar serviços",
+        "description": "Lista os serviços de impressão 3D da 3D Create (personalizados, protótipos e decoração) com descrição de cada um.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_process",
+        "title": "Como funciona",
+        "description": "Descreve as etapas do processo de trabalho da 3D Create, da conversa inicial até a entrega.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_portfolio",
+        "title": "Listar portfólio",
+        "description": "Lista as peças do portfólio público da 3D Create, com material e detalhe técnico. Opcionalmente filtra por material.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "material": {
+              "description": "Filtro opcional por material, ex.: PLA, PETG, ABS, Resina.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "build_quote_link",
+        "title": "Gerar link de orçamento",
+        "description": "Gera um link de WhatsApp já preenchido com a descrição do projeto para solicitar orçamento à 3D Create. Não envia nada — apenas monta a URL.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "project": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Descrição do projeto ou peça desejada."
+            },
+            "name": {
+              "description": "Nome de quem solicita o orçamento.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "project"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
