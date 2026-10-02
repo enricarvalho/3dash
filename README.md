@@ -1,8 +1,8 @@
 # Painel operacional (white label)
 
 SaaS de gestão para empresas de impressão 3D, com módulos de estoque, clientes,
-peças criadas, orçamentos, financeiro e relatórios. Versão white label do
-Create 3Dash: nenhuma marca de cliente fica fixa no código.
+peças criadas, orçamentos, financeiro e relatórios. White label: nenhuma
+marca de cliente fica fixa no código.
 
 ═══════════════════════════════
 
@@ -163,23 +163,13 @@ Priorize: fluxo de trabalho rápido para uso diário (cadastrar orçamento, dar 
 
 lançar financeiro) e dashboards que dão visão clara da saúde do negócio em poucos segundos.
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/07d37474-9036-4aed-ae05-ec1a40d3b2b5).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Desenvolvimento
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+npm install
+npm run dev   # http://localhost:3000 (ou a porta em $PORT)
 ```
+
+Banco: Supabase (`supabase/config.toml` e `.env`). Para um banco novo, rode as
+migrações de `supabase/migrations` em ordem e crie o bucket privado `part-images`.
+Deploy: Vercel (o build detecta o ambiente automaticamente).

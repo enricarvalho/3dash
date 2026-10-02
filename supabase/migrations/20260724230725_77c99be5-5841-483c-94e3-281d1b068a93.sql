@@ -5,7 +5,7 @@ BEGIN NEW.updated_at = now(); RETURN NEW; END; $$ LANGUAGE plpgsql SET search_pa
 CREATE TABLE public.profiles (
   id uuid PRIMARY KEY,
   full_name text,
-  company text DEFAULT '3D Create',
+  company text,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
 );

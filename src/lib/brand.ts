@@ -6,8 +6,10 @@ export const BRAND = {
   appTagline: "Produção e gestão",
   defaultCompany: "Sua empresa",
   /** Gradiente dos PDFs — manter em sincronia com --brand / --brand-2 em styles.css. */
-  pdfFrom: [75, 75, 255] as const,
-  pdfTo: [155, 77, 255] as const,
+  pdfFrom: [0, 106, 165] as const, // #006AA5
+  pdfTo: [0, 148, 148] as const, // #009494
+  /** Cores dos gráficos de pizza/categorias. */
+  chartColors: ["#006AA5", "#007FA6", "#009494", "#51AEBD", "#355781", "#90CACD"],
 };
 
 /** Título de página no padrão "Seção · Nome do app". */

@@ -60,7 +60,7 @@ function mix(t: number) {
   ] as const;
 }
 
-/** Faixa com gradiente azul → roxo (simulado por faixas verticais finas). */
+/** Faixa com gradiente da marca (simulado por faixas verticais finas). */
 export function gradientRect(doc: jsPDF, x: number, y: number, w: number, h: number) {
   const steps = 90;
   const sw = w / steps;

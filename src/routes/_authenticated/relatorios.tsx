@@ -37,7 +37,7 @@ import {
 } from "@/lib/db";
 import { brl, dateBR, downloadCSV, minutesToHuman, monthRange, num } from "@/lib/format";
 import { QUOTE_STATUS_LABEL } from "@/lib/domain";
-import { pageTitle } from "@/lib/brand";
+import { BRAND, pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/relatorios")({
   head: () => ({
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/_authenticated/relatorios")({
   component: RelatoriosPage,
 });
 
-const PIE_COLORS = ["#4B4BFF", "#7A4BFF", "#9B4DFF", "#B984FF", "#5F8BFF", "#C7B3FF"];
+const PIE_COLORS = BRAND.chartColors;
 
 function RelatoriosPage() {
   const [period, setPeriod] = useState<"month" | "quarter" | "year">("quarter");
