@@ -15,5 +15,12 @@ export default defineConfig({
   },
   vite: {
     plugins: [mcpPlugin()],
+    // Fora do sandbox do Lovable (v0, Vercel, local): porta do ambiente, IPv4 e
+    // aceitar o domínio de preview. No Lovable o sandbox sobrescreve isto.
+    server: {
+      host: "0.0.0.0",
+      port: Number(process.env.PORT) || 3000,
+      allowedHosts: true,
+    },
   },
 });
