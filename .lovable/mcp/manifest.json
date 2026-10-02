@@ -1,69 +1,25 @@
 {
   "version": 1,
-  "sdk_version": "0.24.0",
+  "sdk_version": "0.26.1",
   "path": "/mcp",
   "auth": {
-    "type": "none"
+    "type": "oauth",
+    "issuer": "https://qcqetwzixfbispcgqmvh.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
   },
   "mcp": {
     "server": {
-      "name": "3d-create-mcp",
+      "name": "3d-create-hub",
       "version": "0.1.0",
-      "title": "3D Create MCP"
+      "title": "3D Create Hub"
     },
     "tools": [
       {
-        "name": "get_company_info",
-        "title": "Informações da 3D Create",
-        "description": "Retorna dados públicos da 3D Create: nome, slogan, localização, serviços oferecidos e canais de contato.",
-        "annotations": {
-          "readOnlyHint": true,
-          "idempotentHint": true,
-          "openWorldHint": false
-        },
-        "inputSchema": {
-          "$schema": "http://json-schema.org/draft-07/schema#",
-          "type": "object",
-          "properties": {}
-        },
-        "outputSchema": null
-      },
-      {
-        "name": "list_services",
-        "title": "Listar serviços",
-        "description": "Lista os serviços de impressão 3D da 3D Create (personalizados, protótipos e decoração) com descrição de cada um.",
-        "annotations": {
-          "readOnlyHint": true,
-          "idempotentHint": true,
-          "openWorldHint": false
-        },
-        "inputSchema": {
-          "$schema": "http://json-schema.org/draft-07/schema#",
-          "type": "object",
-          "properties": {}
-        },
-        "outputSchema": null
-      },
-      {
-        "name": "get_process",
-        "title": "Como funciona",
-        "description": "Descreve as etapas do processo de trabalho da 3D Create, da conversa inicial até a entrega.",
-        "annotations": {
-          "readOnlyHint": true,
-          "idempotentHint": true,
-          "openWorldHint": false
-        },
-        "inputSchema": {
-          "$schema": "http://json-schema.org/draft-07/schema#",
-          "type": "object",
-          "properties": {}
-        },
-        "outputSchema": null
-      },
-      {
-        "name": "list_portfolio",
-        "title": "Listar portfólio",
-        "description": "Lista as peças do portfólio público da 3D Create, com material e detalhe técnico. Opcionalmente filtra por material.",
+        "name": "list_stock",
+        "title": "Listar estoque",
+        "description": "Lista os itens do estoque (filamentos e insumos) com quantidade, unidade, custo e estoque mínimo.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -73,18 +29,28 @@
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
-            "material": {
-              "description": "Filtro opcional por material, ex.: PLA, PETG, ABS, Resina.",
+            "search": {
+              "description": "Filtro por nome do item.",
               "type": "string"
+            },
+            "only_low": {
+              "description": "Retornar apenas itens abaixo do estoque mínimo.",
+              "type": "boolean"
+            },
+            "limit": {
+              "description": "Máximo de itens (padrão 50).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
             }
           }
         },
         "outputSchema": null
       },
       {
-        "name": "build_quote_link",
-        "title": "Gerar link de orçamento",
-        "description": "Gera um link de WhatsApp já preenchido com a descrição do projeto para solicitar orçamento à 3D Create. Não envia nada — apenas monta a URL.",
+        "name": "list_customers",
+        "title": "Listar clientes",
+        "description": "Lista os clientes cadastrados, com contato, documento e cidade.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -94,19 +60,178 @@
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
-            "project": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Descrição do projeto ou peça desejada."
+            "search": {
+              "description": "Filtro por nome do cliente.",
+              "type": "string"
             },
+            "limit": {
+              "description": "Máximo de clientes (padrão 50).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_customer",
+        "title": "Cadastrar cliente",
+        "description": "Cadastra um novo cliente na 3D Create.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
             "name": {
-              "description": "Nome de quem solicita o orçamento.",
+              "type": "string",
+              "description": "Nome do cliente ou razão social."
+            },
+            "kind": {
+              "description": "Pessoa física (pf) ou jurídica (pj).",
+              "type": "string",
+              "enum": [
+                "pf",
+                "pj"
+              ]
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "doc_number": {
+              "description": "CPF ou CNPJ.",
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "notes": {
               "type": "string"
             }
           },
           "required": [
-            "project"
+            "name"
           ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_parts",
+        "title": "Listar peças",
+        "description": "Lista as peças cadastradas com custo estimado, preço de venda, tempo de impressão e gramas de material.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "search": {
+              "description": "Filtro por nome da peça.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Máximo de peças (padrão 50).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_quotes",
+        "title": "Listar orçamentos",
+        "description": "Lista os orçamentos com título, status, valor total e cliente vinculado.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "status": {
+              "description": "Filtrar por status do orçamento.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Máximo de orçamentos (padrão 50).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sales",
+        "title": "Listar vendas",
+        "description": "Lista as vendas registradas, com data, valor, custo e margem.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "from": {
+              "description": "Data inicial (YYYY-MM-DD).",
+              "type": "string"
+            },
+            "to": {
+              "description": "Data final (YYYY-MM-DD).",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Máximo de vendas (padrão 50).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "financial_summary",
+        "title": "Resumo financeiro",
+        "description": "Resumo do fluxo de caixa em um período: total de entradas, saídas, saldo e totais por categoria.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "from": {
+              "description": "Data inicial (YYYY-MM-DD).",
+              "type": "string"
+            },
+            "to": {
+              "description": "Data final (YYYY-MM-DD).",
+              "type": "string"
+            }
+          }
         },
         "outputSchema": null
       }
