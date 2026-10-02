@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { supabase } from "@/integrations/supabase/client";
+import { useCompanyProfile } from "@/hooks/use-company-profile";
+import { companyName, footerText } from "@/lib/brand";
 import { getCustomer, getSale, listSaleItems } from "@/lib/db";
 import { dateBR } from "@/lib/format";
 import { PAYMENT_METHOD_LABEL, SALE_STATUS_LABEL } from "@/lib/domain";
@@ -25,22 +26,7 @@ export function useReceiptData(saleId: string | null | undefined) {
     queryFn: () => getCustomer(sale.data!.customer_id!),
     enabled: enabled && !!sale.data?.customer_id,
   });
-  const profile = useQuery({
-    queryKey: ["profiles", "me", "contact"],
-    queryFn: async () => {
-      const { data: auth } = await supabase.auth.getUser();
-      if (!auth.user) return null;
-      const { data } = await supabase
-        .from("profiles")
-        .select(
-          "company, contact_email, contact_phone, contact_instagram, contact_website, contact_address, pdf_footer_text",
-        )
-        .eq("id", auth.user.id)
-        .maybeSingle();
-      return data;
-    },
-    staleTime: 60_000,
-  });
+  const profile = useCompanyProfile();
 
   const isLoading =
     enabled &&
@@ -57,13 +43,13 @@ export function useReceiptData(saleId: string | null | undefined) {
     const p = profile.data;
     const subtotal = list.reduce((t, i) => t + Number(i.quantity) * Number(i.unit_price), 0);
     return {
-      company: p?.company || "3D Create",
+      company: companyName(p?.company),
       contactLines: [
         [p?.contact_email, p?.contact_phone].filter(Boolean).join(" · "),
         [p?.contact_instagram, p?.contact_website].filter(Boolean).join(" · "),
         p?.contact_address ?? "",
       ].filter(Boolean),
-      footerText: p?.pdf_footer_text?.trim() || "3D Create · Impressão 3D · Goiânia/GO",
+      footerText: footerText(p?.company, p?.pdf_footer_text),
       number: s.id.slice(0, 8).toUpperCase(),
       saleDate: dateBR(s.sale_date),
       issuedAt: dateBR(new Date().toISOString()),

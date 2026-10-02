@@ -67,11 +67,12 @@ import {
   SYSTEM_INCOME_CATEGORIES,
   categoryLabel,
 } from "@/lib/domain";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/financeiro")({
   head: () => ({
     meta: [
-      { title: "Financeiro · 3D Create" },
+      { title: pageTitle("Financeiro") },
       { name: "description", content: "Fluxo de caixa, entradas, saídas e lucro do período." },
     ],
   }),

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { BRAND } from "@/lib/brand";
 
 type OAuthResult = {
   data?: {
@@ -84,7 +85,7 @@ function Consent() {
       <div className="w-full max-w-md rounded-xl border bg-card p-6 shadow-sm">
         <div className="flex items-center gap-3">
           <Logo size={40} />
-          <span className="font-display text-lg font-bold">Painel operacional</span>
+          <span className="font-display text-lg font-bold">{BRAND.appName}</span>
         </div>
         <h1 className="mt-6 text-xl font-bold tracking-tight">
           Conectar {clientName} à sua conta

@@ -37,11 +37,12 @@ import { addMonths, monthLabel, nextMonthToClose } from "@/lib/cash-closing";
 import { brl, dateBR, num } from "@/lib/format";
 import { QUOTE_STATUS_LABEL, stockStatus } from "@/lib/domain";
 import { materialLabel } from "@/lib/material-stock";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard · 3D Create" },
+      { title: pageTitle("Dashboard") },
       { name: "description", content: "Visão geral do mês: caixa, orçamentos e estoque." },
     ],
   }),

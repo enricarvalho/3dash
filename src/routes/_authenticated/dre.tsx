@@ -51,13 +51,15 @@ import {
   type Regime,
 } from "@/lib/dre";
 import { downloadDrePdf } from "@/lib/dre-pdf";
+import { useCompanyProfile } from "@/hooks/use-company-profile";
 import { brl, dateBR, downloadCSV, num } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/dre")({
   head: () => ({
     meta: [
-      { title: "DRE · 3D Create" },
+      { title: pageTitle("DRE") },
       {
         name: "description",
         content: "Demonstração do resultado: receitas, custos, despesas e lucro do período.",
@@ -177,6 +179,7 @@ function DrePage() {
   const saleItems = useQuery({ queryKey: ["sale_items"], queryFn: () => listSaleItems() });
   const tx = useQuery({ queryKey: ["transactions"], queryFn: listTransactions });
   const customers = useQuery({ queryKey: ["customers"], queryFn: listCustomers });
+  const profile = useCompanyProfile();
 
   const [regime, setRegime] = useState<Regime>("competencia");
   const [preset, setPreset] = useState<PeriodoPreset>("mes");
@@ -249,7 +252,16 @@ function DrePage() {
             <Button
               variant="outline"
               disabled={semDados}
-              onClick={() => downloadDrePdf({ result, anterior, contas, serie, periodoLabel })}
+              onClick={() =>
+                downloadDrePdf({
+                  result,
+                  anterior,
+                  contas,
+                  serie,
+                  periodoLabel,
+                  company: profile.data?.company,
+                })
+              }
             >
               <FileDown className="h-4 w-4" /> PDF
             </Button>

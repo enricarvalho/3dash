@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/Logo";
+import { BRAND, pageTitle } from "@/lib/brand";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,13 +22,13 @@ export const Route = createFileRoute("/")({
 
   head: () => ({
     meta: [
-      { title: "Acesso · Painel operacional" },
+      { title: pageTitle("Acesso") },
       {
         name: "description",
         content:
           "Acesse o painel operacional para gerenciar estoque, clientes, produção e financeiro.",
       },
-      { property: "og:title", content: "Acesso · Painel operacional" },
+      { property: "og:title", content: pageTitle("Acesso") },
       {
         property: "og:description",
         content: "Ambiente seguro de gestão operacional.",
@@ -87,7 +88,7 @@ function AuthPage() {
       <section className="relative hidden flex-col justify-between overflow-hidden bg-brand-gradient p-12 text-brand-foreground lg:flex xl:p-16">
         <div className="flex items-center gap-3">
           <Logo size={42} className="bg-brand-foreground text-brand" />
-          <span className="font-display text-sm font-bold uppercase">Painel operacional</span>
+          <span className="font-display text-sm font-bold uppercase">{BRAND.appName}</span>
         </div>
         <div className="relative max-w-xl">
           <p className="mb-5 font-display text-xs font-bold uppercase text-brand">Controle central</p>
@@ -117,7 +118,7 @@ function AuthPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
             <Logo size={40} />
-            <span className="font-display text-base font-bold">Painel operacional</span>
+            <span className="font-display text-base font-bold">{BRAND.appName}</span>
           </div>
           <p className="mb-3 font-display text-xs font-bold uppercase text-primary">Área restrita</p>
           <h2 className="font-display text-3xl font-bold">Acessar o sistema</h2>

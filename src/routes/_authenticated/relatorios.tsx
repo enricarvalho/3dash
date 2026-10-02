@@ -37,11 +37,12 @@ import {
 } from "@/lib/db";
 import { brl, dateBR, downloadCSV, minutesToHuman, monthRange, num } from "@/lib/format";
 import { QUOTE_STATUS_LABEL } from "@/lib/domain";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/relatorios")({
   head: () => ({
     meta: [
-      { title: "Relatórios · 3D Create" },
+      { title: pageTitle("Relatórios") },
       {
         name: "description",
         content: "Faturamento, clientes que mais compram, materiais consumidos e taxa de conversão.",

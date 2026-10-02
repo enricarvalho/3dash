@@ -43,13 +43,14 @@ import {
   overdueMaintenances,
   printerCosts,
 } from "@/lib/printers";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/impressoras/$printerId")({
   head: () => ({
     meta: [
-      { title: "Detalhe da impressora · 3D Create" },
+      { title: pageTitle("Detalhe da impressora") },
       { name: "description", content: "Custo por hora, manutenções e histórico da impressora." },
-      { property: "og:title", content: "Detalhe da impressora · 3D Create" },
+      { property: "og:title", content: pageTitle("Detalhe da impressora") },
       {
         property: "og:description",
         content: "Custo por hora, manutenções e histórico da impressora.",

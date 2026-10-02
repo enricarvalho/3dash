@@ -71,16 +71,17 @@ import {
   ASSET_CONDITIONS,
   ASSET_CONDITION_LABEL,
 } from "@/lib/domain";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/inventario")({
   head: () => ({
     meta: [
-      { title: "Inventário · 3D Create" },
+      { title: pageTitle("Inventário") },
       {
         name: "description",
         content: "Patrimônio da empresa: equipamentos, ferramentas e peças prontas em estoque.",
       },
-      { property: "og:title", content: "Inventário · 3D Create" },
+      { property: "og:title", content: pageTitle("Inventário") },
       {
         property: "og:description",
         content: "Patrimônio da empresa: equipamentos, ferramentas e peças prontas em estoque.",

@@ -13,13 +13,14 @@ import {
   openSaleReceiptPdf,
   receiptFilename,
 } from "@/lib/receipt-pdf";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/vendas/$saleId/recibo")({
   head: () => ({
     meta: [
-      { title: "Recibo de venda · 3D Create" },
+      { title: pageTitle("Recibo de venda") },
       { name: "description", content: "Recibo da venda com itens, valores e dados do cliente." },
-      { property: "og:title", content: "Recibo de venda · 3D Create" },
+      { property: "og:title", content: pageTitle("Recibo de venda") },
       { property: "og:description", content: "Recibo da venda com itens, valores e dados do cliente." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

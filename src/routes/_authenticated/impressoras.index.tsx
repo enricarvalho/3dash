@@ -49,16 +49,17 @@ import { listPrinters, listPrinterMaintenances, type Printer } from "@/lib/db";
 import { useDeleteRecord } from "@/hooks/use-crud";
 import { brl, num } from "@/lib/format";
 import { PRINTER_STATUSES, PRINTER_STATUS_LABEL, lifeUsedPct, printerCosts } from "@/lib/printers";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/impressoras/")({
   head: () => ({
     meta: [
-      { title: "Impressoras 3D · 3D Create" },
+      { title: pageTitle("Impressoras 3D") },
       {
         name: "description",
         content: "Cadastro de impressoras 3D com custo de depreciação e manutenção por hora.",
       },
-      { property: "og:title", content: "Impressoras 3D · 3D Create" },
+      { property: "og:title", content: pageTitle("Impressoras 3D") },
       {
         property: "og:description",
         content: "Cadastro de impressoras 3D com custo de depreciação e manutenção por hora.",

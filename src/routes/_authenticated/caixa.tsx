@@ -41,13 +41,15 @@ import {
 } from "@/lib/cash-closing";
 import { reopenMonth } from "@/lib/cash-closing-db";
 import { downloadCashClosingPdf } from "@/lib/cash-closing-pdf";
+import { useCompanyProfile } from "@/hooks/use-company-profile";
 import { brl, dateBR } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/caixa")({
   head: () => ({
     meta: [
-      { title: "Fechamento de caixa · 3D Create" },
+      { title: pageTitle("Fechamento de caixa") },
       {
         name: "description",
         content: "Fechamento mensal: resultado, reserva, divisão entre os sócios e conferência.",
@@ -296,6 +298,7 @@ function ClosingDetails({
 }) {
   const qc = useQueryClient();
   const { ownerName } = useOwners();
+  const profile = useCompanyProfile();
   const [reopening, setReopening] = useState(false);
   const [reason, setReason] = useState("");
 
@@ -355,7 +358,9 @@ function ClosingDetails({
         <div className="flex flex-wrap justify-end gap-2">
           <Button
             variant="outline"
-            onClick={() => downloadCashClosingPdf(closing, ownerName(closing.closed_by))}
+            onClick={() =>
+              downloadCashClosingPdf(closing, ownerName(closing.closed_by), profile.data?.company)
+            }
             disabled={closing.status !== "fechado"}
           >
             <FileDown className="h-4 w-4" /> PDF

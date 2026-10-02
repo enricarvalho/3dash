@@ -1,5 +1,5 @@
 // DRE (Demonstração do Resultado do Exercício) — cálculo puro, sem UI.
-// Adaptado do módulo da StarGYN para os dados da 3D Create:
+// Adaptado do módulo da StarGYN para os dados deste painel:
 //   - receitas: vendas (módulo Vendas) + entradas avulsas do Financeiro
 //   - custo: custo de produção das peças vendidas (sales.cost_total)
 //   - despesas: saídas do Financeiro, agrupadas por categoria

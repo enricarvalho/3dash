@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
+import { BRAND } from "@/lib/brand";
 
 
 function NotFoundComponent() {
@@ -81,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Painel operacional" },
+      { title: BRAND.appName },
       { name: "description", content: "Sistema interno de produção e gestão." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

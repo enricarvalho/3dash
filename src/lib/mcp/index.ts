@@ -1,5 +1,7 @@
 import { auth, defineMcp } from "@lovable.dev/mcp-js";
 
+import { BRAND } from "../brand";
+
 import listStock from "./tools/list-stock";
 import listCustomers from "./tools/list-customers";
 import createCustomer from "./tools/create-customer";
@@ -13,11 +15,11 @@ import financialSummary from "./tools/financial-summary";
 const projectRef = import.meta.env['VITE_SUPABASE_PROJECT_ID'] ?? "project-ref-unset";
 
 export default defineMcp({
-  name: "3d-create-hub",
-  title: "3D Create Hub",
+  name: "painel-operacional",
+  title: BRAND.appName,
   version: "0.1.0",
   instructions:
-    "Ferramentas de gestão da 3D Create (impressão 3D, Goiânia): estoque de filamentos, clientes, peças, orçamentos, vendas e financeiro. Todas as operações rodam como o usuário autenticado.",
+    "Ferramentas de gestão de produção 3D: estoque de filamentos, clientes, peças, orçamentos, vendas e financeiro. Todas as operações rodam como o usuário autenticado.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated",

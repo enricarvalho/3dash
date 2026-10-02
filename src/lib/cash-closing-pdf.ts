@@ -20,13 +20,17 @@ const asMap = (v: unknown): MethodMap =>
   v && typeof v === "object" && !Array.isArray(v) ? (v as MethodMap) : {};
 
 /** PDF do fechamento mensal: resultado, reserva, divisão por sócio e conferência. */
-export function downloadCashClosingPdf(c: CashClosing, closedByName: string) {
+export function downloadCashClosingPdf(
+  c: CashClosing,
+  closedByName: string,
+  company?: string | null,
+) {
   const ym = c.month.slice(0, 7);
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const setText = (col: readonly number[]) => doc.setTextColor(col[0], col[1], col[2]);
 
   gradientRect(doc, 0, 0, PAGE_W, 30);
-  drawBrandLockup(doc, LEFT, 8, 44);
+  drawBrandLockup(doc, LEFT, 9, 90, company);
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);

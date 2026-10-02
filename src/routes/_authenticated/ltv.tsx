@@ -27,11 +27,12 @@ import {
 import { listCustomers, listSaleItems, listSales } from "@/lib/db";
 import { brl, dateBR, downloadCSV, num } from "@/lib/format";
 import { computeLtv, type CustomerLtv } from "@/lib/ltv";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/ltv")({
   head: () => ({
     meta: [
-      { title: "LTV · 3D Create" },
+      { title: pageTitle("LTV") },
       {
         name: "description",
         content: "Valor gerado por cliente ao longo do tempo e o que cada um comprou.",

@@ -56,16 +56,17 @@ import { SALE_STATUSES, SALE_STATUS_LABEL } from "@/lib/domain";
 import { logSaleAudit } from "@/lib/sale-audit";
 import { SaleRemovalLog } from "@/components/SaleRemovalLog";
 import { useClosedMonths } from "@/hooks/use-closed-months";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/vendas/")({
   head: () => ({
     meta: [
-      { title: "Vendas · 3D Create" },
+      { title: pageTitle("Vendas") },
       {
         name: "description",
         content: "Registre vendas de peças, acompanhe receita, custo e lucro por venda.",
       },
-      { property: "og:title", content: "Vendas · 3D Create" },
+      { property: "og:title", content: pageTitle("Vendas") },
       {
         property: "og:description",
         content: "Registre vendas de peças, acompanhe receita, custo e lucro por venda.",

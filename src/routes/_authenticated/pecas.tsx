@@ -59,11 +59,12 @@ import { brl, dateBR, minutesToHuman, num } from "@/lib/format";
 import { StockCategoryManager } from "@/components/StockCategoryManager";
 import { listStockCategories } from "@/lib/stock-categories";
 import { Tags } from "lucide-react";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/pecas")({
   head: () => ({
     meta: [
-      { title: "Peças · 3D Create" },
+      { title: pageTitle("Peças") },
       { name: "description", content: "Catálogo de peças modeladas e produzidas." },
     ],
   }),

@@ -46,11 +46,12 @@ import { syncMaterialAssets } from "@/lib/inventory";
 import { MATERIAL_TYPES, MOVEMENT_REASONS, MOVEMENT_REASON_LABEL, stockStatus } from "@/lib/domain";
 import { StockCategoryManager } from "@/components/StockCategoryManager";
 import { categoryLabel, listStockCategories, PRODUCTION_CATEGORY } from "@/lib/stock-categories";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/estoque")({
   head: () => ({
     meta: [
-      { title: "Estoque · 3D Create" },
+      { title: pageTitle("Estoque") },
       {
         name: "description",
         content: "Filamentos e materiais, alertas de mínimo e movimentações.",

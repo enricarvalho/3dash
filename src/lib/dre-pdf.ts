@@ -17,19 +17,21 @@ export function downloadDrePdf({
   contas,
   serie,
   periodoLabel,
+  company,
 }: {
   result: DREResult;
   anterior: DREResult;
   contas: ContasAReceber;
   serie: DREMonthlyPoint[];
   periodoLabel: string;
+  company?: string | null;
 }) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const setText = (c: readonly number[]) => doc.setTextColor(c[0], c[1], c[2]);
   const prev = new Map(anterior.rows.map((r) => [r.id, r.value]));
 
   gradientRect(doc, 0, 0, PAGE_W, 30);
-  drawBrandLockup(doc, LEFT, 8, 44);
+  drawBrandLockup(doc, LEFT, 9, 90, company);
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);

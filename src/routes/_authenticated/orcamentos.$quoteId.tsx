@@ -27,7 +27,7 @@ import { PageHeader, EmptyState, StatCard } from "@/components/PageHeader";
 import { useOwners } from "@/hooks/use-owners";
 import { ImageUploadField } from "@/components/ImageUploadField";
 import { PartImage } from "@/components/PartImage";
-import { PrintHeader } from "@/components/PrintHeader";
+import { PrintHeader, QuoteValidityNote } from "@/components/PrintHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,11 +58,12 @@ import {
 import { useSaveRecord } from "@/hooks/use-crud";
 import { brl, dateBR, minutesToHuman } from "@/lib/format";
 import { QUOTE_STATUSES, QUOTE_STATUS_LABEL } from "@/lib/domain";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/orcamentos/$quoteId")({
   head: () => ({
     meta: [
-      { title: "Orçamento · 3D Create" },
+      { title: pageTitle("Orçamento") },
       { name: "description", content: "Itens, valores e status do orçamento." },
     ],
   }),
@@ -655,9 +656,7 @@ function QuoteDetail() {
         </FormModalContent>
       </FormModal>
 
-      <p className="mt-4 hidden text-xs text-muted-foreground print:block">
-        3D Create · Impressão 3D · Goiânia/GO — orçamento válido por 15 dias.
-      </p>
+      <QuoteValidityNote />
 
       <FormModal open={open} onOpenChange={setOpen}>
         <FormModalContent>

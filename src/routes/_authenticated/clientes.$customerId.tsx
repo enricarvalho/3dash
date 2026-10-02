@@ -12,11 +12,12 @@ import { getCustomer, listQuotes, listSaleItems, listSales, listTransactions } f
 import { customerLtv, itemsBySaleId } from "@/lib/ltv";
 import { brl, dateBR } from "@/lib/format";
 import { QUOTE_STATUS_LABEL } from "@/lib/domain";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/clientes/$customerId")({
   head: () => ({
     meta: [
-      { title: "Cliente · 3D Create" },
+      { title: pageTitle("Cliente") },
       { name: "description", content: "LTV, compras, orçamentos e pagamentos do cliente." },
     ],
   }),

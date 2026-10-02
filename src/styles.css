@@ -143,7 +143,7 @@
   }
 }
 
-/* ── 3D Create — identidade visual ─────────────────────────────── */
+/* ── Identidade visual (white label) ─────────────────────────────── */
 @theme inline {
   --color-brand: var(--brand);
   --color-brand-2: var(--brand-2);
@@ -211,7 +211,8 @@
     margin: 18mm 15mm 20mm 15mm;
 
     @bottom-left {
-      content: "3D Create · Impressão 3D · Goiânia/GO";
+      /* Sobrescrito pelo PrintHeader com o rodapé configurado da empresa. */
+      content: "";
       font-family: var(--font-sans);
       font-size: 9pt;
       color: #666;

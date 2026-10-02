@@ -14,11 +14,12 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Label } from "@/components/ui/label";
 import { useSaveRecord } from "@/hooks/use-crud";
+import { companyName, pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/configuracoes")({
   head: () => ({
     meta: [
-      { title: "Configurações · 3D Create" },
+      { title: pageTitle("Configurações") },
       { name: "description", content: "Dados da empresa e preferências do painel." },
     ],
   }),
@@ -62,7 +63,7 @@ function ConfiguracoesPage() {
     if (profile.data) {
       setForm({
         full_name: profile.data.full_name ?? "",
-        company: profile.data.company ?? "3D Create",
+        company: profile.data.company ?? "",
         contact_email: profile.data.contact_email ?? "",
         contact_phone: profile.data.contact_phone ?? "",
         contact_instagram: profile.data.contact_instagram ?? "",
@@ -132,8 +133,10 @@ function ConfiguracoesPage() {
         <div className="flex items-center gap-3">
           <Logo />
           <div>
-            <p className="font-semibold">{form.company || "3D Create"}</p>
-            <p className="text-sm text-muted-foreground">Impressão 3D · Goiânia/GO</p>
+            <p className="font-semibold">{companyName(form.company)}</p>
+            <p className="text-sm text-muted-foreground">
+              Nome e contatos usados nos orçamentos, recibos e relatórios.
+            </p>
           </div>
         </div>
 
@@ -168,7 +171,7 @@ function ConfiguracoesPage() {
               <Label>E-mail de contato</Label>
               <Input
                 type="email"
-                placeholder="contato@3dcreate.com.br"
+                placeholder="contato@suaempresa.com.br"
                 value={form.contact_email}
                 onChange={(e) => setForm({ ...form, contact_email: e.target.value })}
               />
@@ -184,7 +187,7 @@ function ConfiguracoesPage() {
             <div className="space-y-1.5">
               <Label>Instagram</Label>
               <Input
-                placeholder="@3dcreate"
+                placeholder="@suaempresa"
                 value={form.contact_instagram}
                 onChange={(e) => setForm({ ...form, contact_instagram: e.target.value })}
               />
@@ -192,7 +195,7 @@ function ConfiguracoesPage() {
             <div className="space-y-1.5">
               <Label>Site</Label>
               <Input
-                placeholder="www.3dcreate.com.br"
+                placeholder="www.suaempresa.com.br"
                 value={form.contact_website}
                 onChange={(e) => setForm({ ...form, contact_website: e.target.value })}
               />
@@ -200,7 +203,7 @@ function ConfiguracoesPage() {
             <div className="space-y-1.5 sm:col-span-2">
               <Label>Endereço</Label>
               <Input
-                placeholder="Rua Exemplo, 123 · Setor Marista · Goiânia/GO"
+                placeholder="Rua Exemplo, 123 · Bairro · Cidade/UF"
                 value={form.contact_address}
                 onChange={(e) => setForm({ ...form, contact_address: e.target.value })}
               />
@@ -209,7 +212,7 @@ function ConfiguracoesPage() {
               <Label>Texto do rodapé dos PDFs</Label>
               <Textarea
                 rows={2}
-                placeholder="Ex.: 3D Create · CNPJ 00.000.000/0001-00 · Documento sem valor fiscal"
+                placeholder="Ex.: Sua Empresa · CNPJ 00.000.000/0001-00 · Documento sem valor fiscal"
                 value={form.pdf_footer_text}
                 onChange={(e) => setForm({ ...form, pdf_footer_text: e.target.value })}
               />

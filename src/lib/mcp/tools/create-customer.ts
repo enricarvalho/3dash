@@ -5,7 +5,7 @@ import { supabaseForUser, notAuthenticated, errorResult, jsonResult } from "../s
 export default defineTool({
   name: "create_customer",
   title: "Cadastrar cliente",
-  description: "Cadastra um novo cliente na 3D Create.",
+  description: "Cadastra um novo cliente.",
   inputSchema: {
     name: z.string().trim().describe("Nome do cliente ou razão social."),
     kind: z.enum(["pf", "pj"]).optional().describe("Pessoa física (pf) ou jurídica (pj)."),

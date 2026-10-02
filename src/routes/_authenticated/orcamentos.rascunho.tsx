@@ -5,13 +5,14 @@ import { z } from "zod";
 
 import { EmptyState, PageHeader, StatCard } from "@/components/PageHeader";
 import { PartImage } from "@/components/PartImage";
-import { PrintHeader } from "@/components/PrintHeader";
+import { PrintHeader, QuoteValidityNote } from "@/components/PrintHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { brl, minutesToHuman } from "@/lib/format";
+import { pageTitle } from "@/lib/brand";
 
 const draftSearchSchema = z.object({
   name: z.string().catch(""),
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/_authenticated/orcamentos/rascunho")({
   validateSearch: (s: Record<string, unknown>) => draftSearchSchema.parse(s),
   head: () => ({
     meta: [
-      { title: "Orçamento avulso · 3D Create" },
+      { title: pageTitle("Orçamento avulso") },
       {
         name: "description",
         content: "Orçamento em PDF gerado a partir do cadastro de uma peça, sem salvar no catálogo.",
@@ -212,9 +213,7 @@ function DraftQuotePage() {
         </div>
       </div>
 
-      <p className="mt-4 hidden text-xs text-muted-foreground print:block">
-        3D Create · Impressão 3D · Goiânia/GO — orçamento válido por 15 dias.
-      </p>
+      <QuoteValidityNote />
     </div>
   );
 }

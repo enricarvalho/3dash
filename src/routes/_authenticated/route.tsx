@@ -3,6 +3,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { BRAND } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -22,7 +23,7 @@ function AppLayout() {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-10 flex h-14 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
-            <span className="font-display text-sm font-semibold text-muted-foreground">Painel operacional</span>
+            <span className="font-display text-sm font-semibold text-muted-foreground">{BRAND.appName}</span>
           </header>
           <main className="flex-1 p-4 md:p-6">
             <Outlet />

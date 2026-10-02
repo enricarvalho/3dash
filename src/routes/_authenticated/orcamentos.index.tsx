@@ -58,11 +58,12 @@ import { logQuoteAudit } from "@/lib/quote-audit";
 
 import { AlertTriangle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/orcamentos/")({
   head: () => ({
     meta: [
-      { title: "Orçamentos · 3D Create" },
+      { title: pageTitle("Orçamentos") },
       { name: "description", content: "Pipeline de orçamentos, do rascunho à produção." },
     ],
   }),

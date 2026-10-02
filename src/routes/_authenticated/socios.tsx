@@ -53,11 +53,12 @@ import {
   isInKind,
   totalsByPartner,
 } from "@/lib/partners";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/socios")({
   head: () => ({
     meta: [
-      { title: "Sócios · 3D Create" },
+      { title: pageTitle("Sócios") },
       {
         name: "description",
         content: "Cadastro dos sócios e retiradas em dinheiro, peças e materiais.",

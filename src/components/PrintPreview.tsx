@@ -1,4 +1,5 @@
 import { Logo } from "@/components/Logo";
+import { companyName, footerText as resolveFooter } from "@/lib/brand";
 import { dateBR } from "@/lib/format";
 
 type ContactData = {
@@ -19,11 +20,11 @@ type Props = {
 };
 
 export function PrintPreview({ data, subtitle = "Orçamento #0001", meta = "Cliente exemplo" }: Props) {
-  const company = data.company || "3D Create";
+  const company = companyName(data.company);
   const line1 = [data.contact_email, data.contact_phone].filter(Boolean).join(" · ");
   const line2 = [data.contact_instagram, data.contact_website].filter(Boolean).join(" · ");
   const address = data.contact_address;
-  const footerText = data.pdf_footer_text?.trim() || `${company} · Impressão 3D · Goiânia/GO`;
+  const footerText = resolveFooter(company, data.pdf_footer_text);
 
 
   return (
@@ -41,7 +42,6 @@ export function PrintPreview({ data, subtitle = "Orçamento #0001", meta = "Clie
             <Logo size={28} />
             <div className="leading-tight">
               <p className="text-[11px] font-extrabold tracking-tight">{company}</p>
-              <p className="text-[7px] text-slate-500">Impressão 3D · Goiânia/GO</p>
               <div className="mt-0.5 space-y-[1px] text-[6px] text-slate-500">
                 {line1 && <p>{line1}</p>}
                 {line2 && <p>{line2}</p>}

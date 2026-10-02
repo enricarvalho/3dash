@@ -52,12 +52,13 @@ import {
   maskDoc,
   maskPhone,
 } from "@/lib/br-format";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/_authenticated/clientes/")({
   head: () => ({
     meta: [
-      { title: "Clientes · 3D Create" },
-      { name: "description", content: "Cadastro e histórico dos clientes da 3D Create." },
+      { title: pageTitle("Clientes") },
+      { name: "description", content: "Cadastro e histórico dos clientes." },
     ],
   }),
   component: ClientesPage,

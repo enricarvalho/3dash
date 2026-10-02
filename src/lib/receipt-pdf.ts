@@ -1,6 +1,6 @@
 import { jsPDF } from "jspdf";
 
-import { LOGO_LOCKUP_PNG_BASE64 } from "./logo-base64";
+import { BRAND, companyName } from "./brand";
 
 
 export type ReceiptItem = {
@@ -29,9 +29,9 @@ export type ReceiptData = {
   notes?: string | null;
 };
 
-/* ---------- identidade visual 3D Create ---------- */
-export const BRAND_FROM = [75, 75, 255] as const; // #4B4BFF
-const BRAND_TO = [155, 77, 255] as const; // #9B4DFF
+/* ---------- identidade visual (white label) ---------- */
+export const BRAND_FROM = BRAND.pdfFrom;
+const BRAND_TO = BRAND.pdfTo;
 export const INK = [24, 24, 34] as const;
 export const MUTED = [112, 112, 130] as const;
 export const LINE = [226, 226, 236] as const;
@@ -71,23 +71,21 @@ export function gradientRect(doc: jsPDF, x: number, y: number, w: number, h: num
   }
 }
 
-/** Logo horizontal oficial da 3D Create (ícone + nome, versão branca). */
-const LOCKUP_RATIO = 800 / 257;
-
-export function drawBrandLockup(doc: jsPDF, x: number, y: number, w: number) {
-  const h = w / LOCKUP_RATIO;
-  try {
-    doc.addImage(LOGO_LOCKUP_PNG_BASE64, "PNG", x, y, w, h, "logo3dLockup", "FAST");
-  } catch {
-    doc.setTextColor(255, 255, 255);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(15);
-    doc.text("3D Create", x, y + h * 0.75);
-  }
-  return h;
+/** Marca no topo do PDF: nome da empresa em branco sobre a faixa. Retorna a altura usada. */
+export function drawBrandLockup(
+  doc: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  company?: string | null,
+) {
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(15);
+  const lines = doc.splitTextToSize(companyName(company), w) as string[];
+  doc.text(lines.slice(0, 2), x, y + 6);
+  return 6 + (Math.min(lines.length, 2) - 1) * 6;
 }
-
-
 
 export function buildSaleReceiptPdf(data: ReceiptData) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
@@ -101,17 +99,10 @@ export function buildSaleReceiptPdf(data: ReceiptData) {
   /* ---------- cabeçalho institucional (todas as páginas) ---------- */
   const drawBand = () => {
     gradientRect(doc, 0, 0, PAGE_W, BAND_H);
-    drawBrandLockup(doc, M.left, (BAND_H - 46 / LOCKUP_RATIO) / 2, 46);
+    drawBrandLockup(doc, M.left, BAND_H / 2 - 4, 80, data.company);
 
-    const infoW = rightX - (M.left + 46 + 10);
-    const company = clean(data.company);
-    const showCompany = company && company.toLowerCase().replace(/\s+/g, "") !== "3dcreate";
-
-    const infoLines: string[] = [
-      ...(showCompany ? wrap(company, infoW).slice(0, 1) : []),
-      "Impressão 3D · Goiânia/GO",
-      ...data.contactLines.filter(Boolean).flatMap((l) => wrap(l, infoW)),
-    ];
+    const infoW = rightX - (M.left + 80 + 10);
+    const infoLines: string[] = data.contactLines.filter(Boolean).flatMap((l) => wrap(l, infoW));
 
     // alinhado à direita, ancorado na parte inferior da faixa
     const lineH = 3.6;

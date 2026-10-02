@@ -1,26 +1,23 @@
-# 3D Create Hub
+# Painel operacional (white label)
 
-Crie um SaaS interno de gestão para a "3D Create", empresa de impressão 3D em Goiânia, com 
-
-módulos de estoque, clientes, peças criadas, orçamentos, financeiro e relatórios. Foco em 
-
-usabilidade e clareza de dados no dia a dia da operação — um painel que o dono usa todos os dias.
+SaaS de gestão para empresas de impressão 3D, com módulos de estoque, clientes,
+peças criadas, orçamentos, financeiro e relatórios. Versão white label do
+Create 3Dash: nenhuma marca de cliente fica fixa no código.
 
 ═══════════════════════════════
 
-IDENTIDADE VISUAL
+IDENTIDADE VISUAL (WHITE LABEL)
 
 ═══════════════════════════════
 
-- Logo: círculo com gradiente diagonal azul (#4B4BFF) → roxo (#9B4DFF), ícone de asterisco/
+- Nome do app, slogan, empresa padrão e cores dos PDFs: `src/lib/brand.ts`
 
-  estrela branco no centro
+- Cores da interface: tokens `--brand` / `--brand-2` / `--primary` em `src/styles.css`
 
-- Paleta: gradiente azul → roxo como cor de destaque (botões primários, gráficos, badges de 
+- Nome, contatos e rodapé de cada empresa: tela Configurações (tabela `profiles`),
+  usados no cabeçalho de impressão, orçamentos, recibos, DRE e fechamento de caixa
 
-  status), fundo neutro claro (branco/cinza claro) para leitura confortável de dados, com 
-
-  opção de modo escuro
+- Logo: ícone genérico em `src/components/Logo.tsx`; favicon em `public/favicon.png`
 
 - Interface tipo dashboard SaaS: sidebar de navegação fixa + área de conteúdo, cards, tabelas, 
 
@@ -167,8 +164,6 @@ Priorize: fluxo de trabalho rápido para uso diário (cadastrar orçamento, dar 
 lançar financeiro) e dashboards que dão visão clara da saúde do negócio em poucos segundos.
 
 This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://create-3dash.lovable.app
 
 ## Build with Lovable
 
