@@ -9,23 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SearchConsoleRouteImport } from './routes/search-console'
-import { Route as McpRouteImport } from './routes/mcp'
-import { Route as Impressao3dGoianiaRouteImport } from './routes/impressao-3d-goiania'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedCaixaRouteImport } from './routes/_authenticated/caixa'
+import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated/configuracoes'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDreRouteImport } from './routes/_authenticated/dre'
+import { Route as AuthenticatedEstoqueRouteImport } from './routes/_authenticated/estoque'
+import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
+import { Route as AuthenticatedImpressorasRouteImport } from './routes/_authenticated/impressoras'
+import { Route as AuthenticatedInventarioRouteImport } from './routes/_authenticated/inventario'
+import { Route as AuthenticatedLtvRouteImport } from './routes/_authenticated/ltv'
+import { Route as AuthenticatedPecasRouteImport } from './routes/_authenticated/pecas'
+import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
+import { Route as AuthenticatedSociosRouteImport } from './routes/_authenticated/socios'
+import { Route as AuthenticatedVendasRouteImport } from './routes/_authenticated/vendas'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as AuthenticatedClientesIndexRouteImport } from './routes/_authenticated/clientes.index'
+import { Route as AuthenticatedClientesCustomerIdRouteImport } from './routes/_authenticated/clientes.$customerId'
+import { Route as AuthenticatedImpressorasIndexRouteImport } from './routes/_authenticated/impressoras.index'
+import { Route as AuthenticatedImpressorasPrinterIdRouteImport } from './routes/_authenticated/impressoras.$printerId'
+import { Route as AuthenticatedOrcamentosIndexRouteImport } from './routes/_authenticated/orcamentos.index'
+import { Route as AuthenticatedOrcamentosQuoteIdRouteImport } from './routes/_authenticated/orcamentos.$quoteId'
+import { Route as AuthenticatedOrcamentosRascunhoRouteImport } from './routes/_authenticated/orcamentos.rascunho'
+import { Route as AuthenticatedVendasIndexRouteImport } from './routes/_authenticated/vendas.index'
+import { Route as AuthenticatedVendasSaleIdReciboRouteImport } from './routes/_authenticated/vendas.$saleId.recibo'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SearchConsoleRoute = SearchConsoleRouteImport.update({
-  id: '/search-console',
-  path: '/search-console',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -33,124 +54,369 @@ const McpRoute = McpRouteImport.update({
   path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
-const Impressao3dGoianiaRoute = Impressao3dGoianiaRouteImport.update({
-  id: '/impressao-3d-goiania',
-  path: '/impressao-3d-goiania',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Char91DotwellKnownChar93OauthProtectedResourceRoute =
-  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
-    id: '/.well-known/oauth-protected-resource',
-    path: '/.well-known/oauth-protected-resource',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const Char91DotmcpChar93ListToolsRoute =
   Char91DotmcpChar93ListToolsRouteImport.update({
     id: '/.mcp/list-tools',
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedCaixaRoute = AuthenticatedCaixaRouteImport.update({
+  id: '/caixa',
+  path: '/caixa',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedConfiguracoesRoute =
+  AuthenticatedConfiguracoesRouteImport.update({
+    id: '/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDreRoute = AuthenticatedDreRouteImport.update({
+  id: '/dre',
+  path: '/dre',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEstoqueRoute = AuthenticatedEstoqueRouteImport.update({
+  id: '/estoque',
+  path: '/estoque',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedImpressorasRoute =
+  AuthenticatedImpressorasRouteImport.update({
+    id: '/impressoras',
+    path: '/impressoras',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInventarioRoute = AuthenticatedInventarioRouteImport.update({
+  id: '/inventario',
+  path: '/inventario',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLtvRoute = AuthenticatedLtvRouteImport.update({
+  id: '/ltv',
+  path: '/ltv',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPecasRoute = AuthenticatedPecasRouteImport.update({
+  id: '/pecas',
+  path: '/pecas',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSociosRoute = AuthenticatedSociosRouteImport.update({
+  id: '/socios',
+  path: '/socios',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedVendasRoute = AuthenticatedVendasRouteImport.update({
+  id: '/vendas',
+  path: '/vendas',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedClientesIndexRoute =
+  AuthenticatedClientesIndexRouteImport.update({
+    id: '/clientes/',
+    path: '/clientes/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientesCustomerIdRoute =
+  AuthenticatedClientesCustomerIdRouteImport.update({
+    id: '/clientes/$customerId',
+    path: '/clientes/$customerId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedImpressorasIndexRoute =
+  AuthenticatedImpressorasIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedImpressorasRoute,
+  } as any)
+const AuthenticatedImpressorasPrinterIdRoute =
+  AuthenticatedImpressorasPrinterIdRouteImport.update({
+    id: '/$printerId',
+    path: '/$printerId',
+    getParentRoute: () => AuthenticatedImpressorasRoute,
+  } as any)
+const AuthenticatedOrcamentosIndexRoute =
+  AuthenticatedOrcamentosIndexRouteImport.update({
+    id: '/orcamentos/',
+    path: '/orcamentos/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedOrcamentosQuoteIdRoute =
+  AuthenticatedOrcamentosQuoteIdRouteImport.update({
+    id: '/orcamentos/$quoteId',
+    path: '/orcamentos/$quoteId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedOrcamentosRascunhoRoute =
+  AuthenticatedOrcamentosRascunhoRouteImport.update({
+    id: '/orcamentos/rascunho',
+    path: '/orcamentos/rascunho',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedVendasIndexRoute =
+  AuthenticatedVendasIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedVendasRoute,
+  } as any)
+const AuthenticatedVendasSaleIdReciboRoute =
+  AuthenticatedVendasSaleIdReciboRouteImport.update({
+    id: '/$saleId/recibo',
+    path: '/$saleId/recibo',
+    getParentRoute: () => AuthenticatedVendasRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/impressao-3d-goiania': typeof Impressao3dGoianiaRoute
   '/mcp': typeof McpRoute
-  '/search-console': typeof SearchConsoleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/caixa': typeof AuthenticatedCaixaRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/dre': typeof AuthenticatedDreRoute
+  '/estoque': typeof AuthenticatedEstoqueRoute
+  '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/impressoras': typeof AuthenticatedImpressorasRouteWithChildren
+  '/inventario': typeof AuthenticatedInventarioRoute
+  '/ltv': typeof AuthenticatedLtvRoute
+  '/pecas': typeof AuthenticatedPecasRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/socios': typeof AuthenticatedSociosRoute
+  '/vendas': typeof AuthenticatedVendasRouteWithChildren
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/clientes/$customerId': typeof AuthenticatedClientesCustomerIdRoute
+  '/impressoras/$printerId': typeof AuthenticatedImpressorasPrinterIdRoute
+  '/orcamentos/$quoteId': typeof AuthenticatedOrcamentosQuoteIdRoute
+  '/orcamentos/rascunho': typeof AuthenticatedOrcamentosRascunhoRoute
+  '/clientes/': typeof AuthenticatedClientesIndexRoute
+  '/impressoras/': typeof AuthenticatedImpressorasIndexRoute
+  '/orcamentos/': typeof AuthenticatedOrcamentosIndexRoute
+  '/vendas/': typeof AuthenticatedVendasIndexRoute
+  '/vendas/$saleId/recibo': typeof AuthenticatedVendasSaleIdReciboRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/impressao-3d-goiania': typeof Impressao3dGoianiaRoute
   '/mcp': typeof McpRoute
-  '/search-console': typeof SearchConsoleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/caixa': typeof AuthenticatedCaixaRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/dre': typeof AuthenticatedDreRoute
+  '/estoque': typeof AuthenticatedEstoqueRoute
+  '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/inventario': typeof AuthenticatedInventarioRoute
+  '/ltv': typeof AuthenticatedLtvRoute
+  '/pecas': typeof AuthenticatedPecasRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/socios': typeof AuthenticatedSociosRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/clientes/$customerId': typeof AuthenticatedClientesCustomerIdRoute
+  '/impressoras/$printerId': typeof AuthenticatedImpressorasPrinterIdRoute
+  '/orcamentos/$quoteId': typeof AuthenticatedOrcamentosQuoteIdRoute
+  '/orcamentos/rascunho': typeof AuthenticatedOrcamentosRascunhoRoute
+  '/clientes': typeof AuthenticatedClientesIndexRoute
+  '/impressoras': typeof AuthenticatedImpressorasIndexRoute
+  '/orcamentos': typeof AuthenticatedOrcamentosIndexRoute
+  '/vendas': typeof AuthenticatedVendasIndexRoute
+  '/vendas/$saleId/recibo': typeof AuthenticatedVendasSaleIdReciboRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/impressao-3d-goiania': typeof Impressao3dGoianiaRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/mcp': typeof McpRoute
-  '/search-console': typeof SearchConsoleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_authenticated/caixa': typeof AuthenticatedCaixaRoute
+  '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/dre': typeof AuthenticatedDreRoute
+  '/_authenticated/estoque': typeof AuthenticatedEstoqueRoute
+  '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/_authenticated/impressoras': typeof AuthenticatedImpressorasRouteWithChildren
+  '/_authenticated/inventario': typeof AuthenticatedInventarioRoute
+  '/_authenticated/ltv': typeof AuthenticatedLtvRoute
+  '/_authenticated/pecas': typeof AuthenticatedPecasRoute
+  '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/_authenticated/socios': typeof AuthenticatedSociosRoute
+  '/_authenticated/vendas': typeof AuthenticatedVendasRouteWithChildren
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_authenticated/clientes/$customerId': typeof AuthenticatedClientesCustomerIdRoute
+  '/_authenticated/impressoras/$printerId': typeof AuthenticatedImpressorasPrinterIdRoute
+  '/_authenticated/orcamentos/$quoteId': typeof AuthenticatedOrcamentosQuoteIdRoute
+  '/_authenticated/orcamentos/rascunho': typeof AuthenticatedOrcamentosRascunhoRoute
+  '/_authenticated/clientes/': typeof AuthenticatedClientesIndexRoute
+  '/_authenticated/impressoras/': typeof AuthenticatedImpressorasIndexRoute
+  '/_authenticated/orcamentos/': typeof AuthenticatedOrcamentosIndexRoute
+  '/_authenticated/vendas/': typeof AuthenticatedVendasIndexRoute
+  '/_authenticated/vendas/$saleId/recibo': typeof AuthenticatedVendasSaleIdReciboRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/impressao-3d-goiania'
     | '/mcp'
-    | '/search-console'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/caixa'
+    | '/configuracoes'
+    | '/dashboard'
+    | '/dre'
+    | '/estoque'
+    | '/financeiro'
+    | '/impressoras'
+    | '/inventario'
+    | '/ltv'
+    | '/pecas'
+    | '/relatorios'
+    | '/socios'
+    | '/vendas'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/clientes/$customerId'
+    | '/impressoras/$printerId'
+    | '/orcamentos/$quoteId'
+    | '/orcamentos/rascunho'
+    | '/clientes/'
+    | '/impressoras/'
+    | '/orcamentos/'
+    | '/vendas/'
+    | '/vendas/$saleId/recibo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/impressao-3d-goiania'
     | '/mcp'
-    | '/search-console'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/caixa'
+    | '/configuracoes'
+    | '/dashboard'
+    | '/dre'
+    | '/estoque'
+    | '/financeiro'
+    | '/inventario'
+    | '/ltv'
+    | '/pecas'
+    | '/relatorios'
+    | '/socios'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/clientes/$customerId'
+    | '/impressoras/$printerId'
+    | '/orcamentos/$quoteId'
+    | '/orcamentos/rascunho'
+    | '/clientes'
+    | '/impressoras'
+    | '/orcamentos'
+    | '/vendas'
+    | '/vendas/$saleId/recibo'
   id:
     | '__root__'
     | '/'
-    | '/impressao-3d-goiania'
+    | '/_authenticated'
     | '/mcp'
-    | '/search-console'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/_authenticated/caixa'
+    | '/_authenticated/configuracoes'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/dre'
+    | '/_authenticated/estoque'
+    | '/_authenticated/financeiro'
+    | '/_authenticated/impressoras'
+    | '/_authenticated/inventario'
+    | '/_authenticated/ltv'
+    | '/_authenticated/pecas'
+    | '/_authenticated/relatorios'
+    | '/_authenticated/socios'
+    | '/_authenticated/vendas'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/_authenticated/clientes/$customerId'
+    | '/_authenticated/impressoras/$printerId'
+    | '/_authenticated/orcamentos/$quoteId'
+    | '/_authenticated/orcamentos/rascunho'
+    | '/_authenticated/clientes/'
+    | '/_authenticated/impressoras/'
+    | '/_authenticated/orcamentos/'
+    | '/_authenticated/vendas/'
+    | '/_authenticated/vendas/$saleId/recibo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  Impressao3dGoianiaRoute: typeof Impressao3dGoianiaRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   McpRoute: typeof McpRoute
-  SearchConsoleRoute: typeof SearchConsoleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/search-console': {
-      id: '/search-console'
-      path: '/search-console'
-      fullPath: '/search-console'
-      preLoaderRoute: typeof SearchConsoleRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -160,25 +426,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/impressao-3d-goiania': {
-      id: '/impressao-3d-goiania'
-      path: '/impressao-3d-goiania'
-      fullPath: '/impressao-3d-goiania'
-      preLoaderRoute: typeof Impressao3dGoianiaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/.well-known/oauth-protected-resource': {
-      id: '/.well-known/oauth-protected-resource'
-      path: '/.well-known/oauth-protected-resource'
-      fullPath: '/.well-known/oauth-protected-resource'
-      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.mcp/list-tools': {
@@ -188,6 +440,111 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/caixa': {
+      id: '/_authenticated/caixa'
+      path: '/caixa'
+      fullPath: '/caixa'
+      preLoaderRoute: typeof AuthenticatedCaixaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/configuracoes': {
+      id: '/_authenticated/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dre': {
+      id: '/_authenticated/dre'
+      path: '/dre'
+      fullPath: '/dre'
+      preLoaderRoute: typeof AuthenticatedDreRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/estoque': {
+      id: '/_authenticated/estoque'
+      path: '/estoque'
+      fullPath: '/estoque'
+      preLoaderRoute: typeof AuthenticatedEstoqueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/financeiro': {
+      id: '/_authenticated/financeiro'
+      path: '/financeiro'
+      fullPath: '/financeiro'
+      preLoaderRoute: typeof AuthenticatedFinanceiroRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/impressoras': {
+      id: '/_authenticated/impressoras'
+      path: '/impressoras'
+      fullPath: '/impressoras'
+      preLoaderRoute: typeof AuthenticatedImpressorasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventario': {
+      id: '/_authenticated/inventario'
+      path: '/inventario'
+      fullPath: '/inventario'
+      preLoaderRoute: typeof AuthenticatedInventarioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ltv': {
+      id: '/_authenticated/ltv'
+      path: '/ltv'
+      fullPath: '/ltv'
+      preLoaderRoute: typeof AuthenticatedLtvRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pecas': {
+      id: '/_authenticated/pecas'
+      path: '/pecas'
+      fullPath: '/pecas'
+      preLoaderRoute: typeof AuthenticatedPecasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/relatorios': {
+      id: '/_authenticated/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/socios': {
+      id: '/_authenticated/socios'
+      path: '/socios'
+      fullPath: '/socios'
+      preLoaderRoute: typeof AuthenticatedSociosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/vendas': {
+      id: '/_authenticated/vendas'
+      path: '/vendas'
+      fullPath: '/vendas'
+      preLoaderRoute: typeof AuthenticatedVendasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -195,18 +552,156 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/clientes/': {
+      id: '/_authenticated/clientes/'
+      path: '/clientes'
+      fullPath: '/clientes/'
+      preLoaderRoute: typeof AuthenticatedClientesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/clientes/$customerId': {
+      id: '/_authenticated/clientes/$customerId'
+      path: '/clientes/$customerId'
+      fullPath: '/clientes/$customerId'
+      preLoaderRoute: typeof AuthenticatedClientesCustomerIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/impressoras/': {
+      id: '/_authenticated/impressoras/'
+      path: '/'
+      fullPath: '/impressoras/'
+      preLoaderRoute: typeof AuthenticatedImpressorasIndexRouteImport
+      parentRoute: typeof AuthenticatedImpressorasRoute
+    }
+    '/_authenticated/impressoras/$printerId': {
+      id: '/_authenticated/impressoras/$printerId'
+      path: '/$printerId'
+      fullPath: '/impressoras/$printerId'
+      preLoaderRoute: typeof AuthenticatedImpressorasPrinterIdRouteImport
+      parentRoute: typeof AuthenticatedImpressorasRoute
+    }
+    '/_authenticated/orcamentos/': {
+      id: '/_authenticated/orcamentos/'
+      path: '/orcamentos'
+      fullPath: '/orcamentos/'
+      preLoaderRoute: typeof AuthenticatedOrcamentosIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/orcamentos/$quoteId': {
+      id: '/_authenticated/orcamentos/$quoteId'
+      path: '/orcamentos/$quoteId'
+      fullPath: '/orcamentos/$quoteId'
+      preLoaderRoute: typeof AuthenticatedOrcamentosQuoteIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/orcamentos/rascunho': {
+      id: '/_authenticated/orcamentos/rascunho'
+      path: '/orcamentos/rascunho'
+      fullPath: '/orcamentos/rascunho'
+      preLoaderRoute: typeof AuthenticatedOrcamentosRascunhoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/vendas/': {
+      id: '/_authenticated/vendas/'
+      path: '/'
+      fullPath: '/vendas/'
+      preLoaderRoute: typeof AuthenticatedVendasIndexRouteImport
+      parentRoute: typeof AuthenticatedVendasRoute
+    }
+    '/_authenticated/vendas/$saleId/recibo': {
+      id: '/_authenticated/vendas/$saleId/recibo'
+      path: '/$saleId/recibo'
+      fullPath: '/vendas/$saleId/recibo'
+      preLoaderRoute: typeof AuthenticatedVendasSaleIdReciboRouteImport
+      parentRoute: typeof AuthenticatedVendasRoute
+    }
   }
 }
 
+interface AuthenticatedImpressorasRouteChildren {
+  AuthenticatedImpressorasPrinterIdRoute: typeof AuthenticatedImpressorasPrinterIdRoute
+  AuthenticatedImpressorasIndexRoute: typeof AuthenticatedImpressorasIndexRoute
+}
+
+const AuthenticatedImpressorasRouteChildren: AuthenticatedImpressorasRouteChildren =
+  {
+    AuthenticatedImpressorasPrinterIdRoute:
+      AuthenticatedImpressorasPrinterIdRoute,
+    AuthenticatedImpressorasIndexRoute: AuthenticatedImpressorasIndexRoute,
+  }
+
+const AuthenticatedImpressorasRouteWithChildren =
+  AuthenticatedImpressorasRoute._addFileChildren(
+    AuthenticatedImpressorasRouteChildren,
+  )
+
+interface AuthenticatedVendasRouteChildren {
+  AuthenticatedVendasIndexRoute: typeof AuthenticatedVendasIndexRoute
+  AuthenticatedVendasSaleIdReciboRoute: typeof AuthenticatedVendasSaleIdReciboRoute
+}
+
+const AuthenticatedVendasRouteChildren: AuthenticatedVendasRouteChildren = {
+  AuthenticatedVendasIndexRoute: AuthenticatedVendasIndexRoute,
+  AuthenticatedVendasSaleIdReciboRoute: AuthenticatedVendasSaleIdReciboRoute,
+}
+
+const AuthenticatedVendasRouteWithChildren =
+  AuthenticatedVendasRoute._addFileChildren(AuthenticatedVendasRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCaixaRoute: typeof AuthenticatedCaixaRoute
+  AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDreRoute: typeof AuthenticatedDreRoute
+  AuthenticatedEstoqueRoute: typeof AuthenticatedEstoqueRoute
+  AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
+  AuthenticatedImpressorasRoute: typeof AuthenticatedImpressorasRouteWithChildren
+  AuthenticatedInventarioRoute: typeof AuthenticatedInventarioRoute
+  AuthenticatedLtvRoute: typeof AuthenticatedLtvRoute
+  AuthenticatedPecasRoute: typeof AuthenticatedPecasRoute
+  AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
+  AuthenticatedSociosRoute: typeof AuthenticatedSociosRoute
+  AuthenticatedVendasRoute: typeof AuthenticatedVendasRouteWithChildren
+  AuthenticatedClientesCustomerIdRoute: typeof AuthenticatedClientesCustomerIdRoute
+  AuthenticatedOrcamentosQuoteIdRoute: typeof AuthenticatedOrcamentosQuoteIdRoute
+  AuthenticatedOrcamentosRascunhoRoute: typeof AuthenticatedOrcamentosRascunhoRoute
+  AuthenticatedClientesIndexRoute: typeof AuthenticatedClientesIndexRoute
+  AuthenticatedOrcamentosIndexRoute: typeof AuthenticatedOrcamentosIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCaixaRoute: AuthenticatedCaixaRoute,
+  AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDreRoute: AuthenticatedDreRoute,
+  AuthenticatedEstoqueRoute: AuthenticatedEstoqueRoute,
+  AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
+  AuthenticatedImpressorasRoute: AuthenticatedImpressorasRouteWithChildren,
+  AuthenticatedInventarioRoute: AuthenticatedInventarioRoute,
+  AuthenticatedLtvRoute: AuthenticatedLtvRoute,
+  AuthenticatedPecasRoute: AuthenticatedPecasRoute,
+  AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
+  AuthenticatedSociosRoute: AuthenticatedSociosRoute,
+  AuthenticatedVendasRoute: AuthenticatedVendasRouteWithChildren,
+  AuthenticatedClientesCustomerIdRoute: AuthenticatedClientesCustomerIdRoute,
+  AuthenticatedOrcamentosQuoteIdRoute: AuthenticatedOrcamentosQuoteIdRoute,
+  AuthenticatedOrcamentosRascunhoRoute: AuthenticatedOrcamentosRascunhoRoute,
+  AuthenticatedClientesIndexRoute: AuthenticatedClientesIndexRoute,
+  AuthenticatedOrcamentosIndexRoute: AuthenticatedOrcamentosIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  Impressao3dGoianiaRoute: Impressao3dGoianiaRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   McpRoute: McpRoute,
-  SearchConsoleRoute: SearchConsoleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,15 +1,34 @@
-import { defineMcp } from "@lovable.dev/mcp-js";
-import getCompanyInfo from "./tools/get-company-info";
-import listServices from "./tools/list-services";
-import listPortfolio from "./tools/list-portfolio";
-import getProcess from "./tools/get-process";
-import buildQuoteLink from "./tools/build-quote-link";
+import { auth, defineMcp } from "@lovable.dev/mcp-js";
+
+import listStock from "./tools/list-stock";
+import listCustomers from "./tools/list-customers";
+import createCustomer from "./tools/create-customer";
+import listParts from "./tools/list-parts";
+import listQuotes from "./tools/list-quotes";
+import listSales from "./tools/list-sales";
+import financialSummary from "./tools/financial-summary";
+
+// The OAuth issuer must be the direct Supabase host; the project ref is the only
+// value that survives publish unchanged.
+const projectRef = import.meta.env['VITE_SUPABASE_PROJECT_ID'] ?? "project-ref-unset";
 
 export default defineMcp({
-  name: "3d-create-mcp",
-  title: "3D Create MCP",
+  name: "3d-create-hub",
+  title: "3D Create Hub",
   version: "0.1.0",
   instructions:
-    "Ferramentas públicas da 3D Create, estúdio de impressão 3D em Goiânia. Use `get_company_info` para dados da empresa, `list_services` para serviços, `get_process` para o fluxo de trabalho, `list_portfolio` para peças já produzidas e `build_quote_link` para montar um link de orçamento no WhatsApp.",
-  tools: [getCompanyInfo, listServices, getProcess, listPortfolio, buildQuoteLink],
+    "Ferramentas de gestão da 3D Create (impressão 3D, Goiânia): estoque de filamentos, clientes, peças, orçamentos, vendas e financeiro. Todas as operações rodam como o usuário autenticado.",
+  auth: auth.oauth.issuer({
+    issuer: `https://${projectRef}.supabase.co/auth/v1`,
+    acceptedAudiences: "authenticated",
+  }),
+  tools: [
+    listStock,
+    listCustomers,
+    createCustomer,
+    listParts,
+    listQuotes,
+    listSales,
+    financialSummary,
+  ],
 });

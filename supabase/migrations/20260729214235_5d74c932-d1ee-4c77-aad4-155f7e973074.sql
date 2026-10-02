@@ -1,0 +1,1 @@
+UPDATE public.assets SET printer_id = origin_printer_id WHERE origin_printer_id IS NOT NULL AND printer_id IS NULL;

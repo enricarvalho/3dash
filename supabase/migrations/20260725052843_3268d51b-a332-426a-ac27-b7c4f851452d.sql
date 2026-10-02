@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS min_margin_pct numeric NOT NULL DEFAULT 20;

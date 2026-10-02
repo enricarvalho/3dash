@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://3dcreate.com.br/sitemap.xml
+Disallow: /dashboard
+Disallow: /estoque
+Disallow: /clientes
+Disallow: /pecas
+Disallow: /orcamentos
+Disallow: /financeiro
+Disallow: /relatorios
+Disallow: /configuracoes

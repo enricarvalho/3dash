@@ -1,0 +1,1 @@
+ALTER TABLE public.parts ADD COLUMN sale_price numeric NOT NULL DEFAULT 0;

@@ -2,9 +2,16 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+
+const DIACRITICS_RE = new RegExp("[\\u0300-\\u036f]", "g");
+
+/** Normaliza texto para comparação de busca (sem acentos, minúsculo). */
+function normalizeSearch(text: string) {
+  return text.normalize("NFD").replace(DIACRITICS_RE, "").toLowerCase().trim();
+}
 
 const Select = SelectPrimitive.Root;
 
@@ -62,34 +69,100 @@ SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayNam
 
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-select-content-transform-origin)",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className,
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & {
+    /** Texto do placeholder do campo de busca. */
+    searchPlaceholder?: string;
+  }
+>(({ className, children, position = "popper", searchPlaceholder = "Buscar...", ...props }, ref) => {
+  const viewportRef = React.useRef<HTMLDivElement | null>(null);
+  const searchInputRef = React.useRef<HTMLInputElement | null>(null);
+  const [query, setQuery] = React.useState("");
+  const [noMatches, setNoMatches] = React.useState(false);
+
+  // Filtra as opções pelo texto renderizado — funciona com qualquer conteúdo
+  // dos SelectItem, sem exigir mudanças em cada tela que usa o Select.
+  React.useEffect(() => {
+    const root = viewportRef.current;
+    if (!root) return;
+    const options = Array.from(root.querySelectorAll<HTMLElement>('[role="option"]'));
+    const q = normalizeSearch(query);
+    let visible = 0;
+    for (const el of options) {
+      const match = !q || normalizeSearch(el.textContent ?? "").includes(q);
+      el.style.display = match ? "" : "none";
+      el.dataset.searchHidden = match ? "false" : "true";
+      if (match) visible++;
+    }
+    setNoMatches(options.length > 0 && visible === 0);
+  }, [query, children]);
+
+  // Foca o campo de busca ao abrir (depois do próprio Radix focar o item
+  // selecionado), para já poder digitar sem precisar clicar antes.
+  React.useEffect(() => {
+    const id = requestAnimationFrame(() => searchInputRef.current?.focus());
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        ref={ref}
         className={cn(
-          "p-1",
+          "relative z-50 max-h-(--radix-select-content-available-height) w-max min-w-[8rem] max-w-[min(92vw,26rem)] overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-select-content-transform-origin)",
           position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
+            "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          className,
         )}
+        position={position}
+        {...props}
       >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
+        <div
+          className="flex items-center gap-2 border-b px-2.5 py-1.5"
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          <Search className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+          <input
+            ref={searchInputRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                e.stopPropagation();
+                viewportRef.current
+                  ?.querySelector<HTMLElement>('[role="option"]:not([data-search-hidden="true"])')
+                  ?.click();
+                return;
+              }
+              if (e.key !== "Escape") e.stopPropagation();
+            }}
+            placeholder={searchPlaceholder}
+            aria-label="Buscar opção"
+            autoComplete="off"
+            className="h-7 w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+          />
+        </div>
+        <SelectScrollUpButton />
+        <SelectPrimitive.Viewport
+          ref={viewportRef}
+          className={cn(
+            "p-1",
+            position === "popper" &&
+              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
+          )}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+        <SelectScrollDownButton />
+        {noMatches && (
+          <p className="px-2.5 py-4 text-center text-sm text-muted-foreground">
+            Nenhum resultado encontrado.
+          </p>
+        )}
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  );
+});
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
 const SelectLabel = React.forwardRef<
@@ -111,7 +184,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-default select-none items-center break-words rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className,
     )}
     {...props}
