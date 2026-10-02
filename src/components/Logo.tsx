@@ -1,23 +1,17 @@
 import { cn } from "@/lib/utils";
-import markAsset from "@/assets/3dcreate-mark.png.asset.json";
+import { Box } from "lucide-react";
 
 export function Logo({ className, size = 36 }: { className?: string; size?: number }) {
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-full bg-brand-gradient",
+        "inline-flex shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground",
         className,
       )}
       style={{ width: size, height: size }}
+      aria-label="Gestão operacional"
     >
-      <img
-        src={markAsset.url}
-        alt="3D Create"
-        width={Math.round(size * 0.62)}
-        height={Math.round(size * 0.62)}
-        className="object-contain"
-        style={{ width: size * 0.62, height: size * 0.62 }}
-      />
+      <Box aria-hidden="true" style={{ width: size * 0.52, height: size * 0.52 }} strokeWidth={1.8} />
     </span>
   );
 }
@@ -28,8 +22,8 @@ export function LogoWordmark({ collapsed = false }: { collapsed?: boolean }) {
       <Logo size={32} />
       {!collapsed && (
         <div className="leading-tight">
-          <p className="text-sm font-extrabold tracking-tight">3D Create</p>
-          <p className="text-[11px] text-muted-foreground">Gestão · Goiânia</p>
+          <p className="font-display text-sm font-bold">Painel operacional</p>
+          <p className="text-[11px] text-muted-foreground">Produção e gestão</p>
         </div>
       )}
     </div>

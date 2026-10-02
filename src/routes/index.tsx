@@ -8,6 +8,7 @@ import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ArrowRight, Boxes, ChartNoAxesCombined, ClipboardCheck } from "lucide-react";
 
 
 export const Route = createFileRoute("/")({
@@ -20,16 +21,16 @@ export const Route = createFileRoute("/")({
 
   head: () => ({
     meta: [
-      { title: "Entrar · 3D Create Gestão" },
+      { title: "Acesso · Painel operacional" },
       {
         name: "description",
         content:
-          "Acesse o painel de gestão da 3D Create: estoque, clientes, peças, orçamentos e financeiro.",
+          "Acesse o painel operacional para gerenciar estoque, clientes, produção e financeiro.",
       },
-      { property: "og:title", content: "Entrar · 3D Create Gestão" },
+      { property: "og:title", content: "Acesso · Painel operacional" },
       {
         property: "og:description",
-        content: "Painel interno da 3D Create — impressão 3D em Goiânia.",
+        content: "Ambiente seguro de gestão operacional.",
       },
     ],
   }),
@@ -82,29 +83,45 @@ function AuthPage() {
   };
 
   return (
-    <main className="grid min-h-screen lg:grid-cols-2">
-      <section className="hidden flex-col justify-between bg-brand-gradient p-12 text-brand-foreground lg:flex">
-        <Logo size={52} className="ring-1 ring-white/30" />
-        <div>
-          <h1 className="max-w-md text-4xl font-extrabold leading-tight tracking-tight">
-            Toda a operação da 3D Create em um só painel.
-          </h1>
-          <p className="mt-4 max-w-md text-sm opacity-90">
-            Estoque de filamentos, clientes, peças produzidas, orçamentos, fluxo de caixa e
-            relatórios — com a clareza que o dia a dia da impressão 3D exige.
-          </p>
+    <main className="grid min-h-screen bg-background lg:grid-cols-[1.08fr_0.92fr]">
+      <section className="relative hidden flex-col justify-between overflow-hidden bg-brand-gradient p-12 text-brand-foreground lg:flex xl:p-16">
+        <div className="flex items-center gap-3">
+          <Logo size={42} className="bg-brand-foreground text-brand" />
+          <span className="font-display text-sm font-bold uppercase">Painel operacional</span>
         </div>
-        <p className="text-xs opacity-75">Goiânia · GO</p>
+        <div className="relative max-w-xl">
+          <p className="mb-5 font-display text-xs font-bold uppercase text-brand">Controle central</p>
+          <h1 className="font-display text-5xl font-bold leading-[1.08] xl:text-6xl">
+            Produção, vendas e caixa sob controle.
+          </h1>
+          <p className="mt-6 max-w-lg text-base leading-7 text-brand-foreground/70">
+            Um ambiente direto para acompanhar a operação e tomar decisões com dados claros.
+          </p>
+          <div className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-md border border-brand-foreground/15 bg-brand-foreground/15">
+            {[
+              [Boxes, "Estoque"],
+              [ClipboardCheck, "Produção"],
+              [ChartNoAxesCombined, "Financeiro"],
+            ].map(([Icon, label]) => (
+              <div key={label as string} className="bg-brand-foreground/5 p-4">
+                <Icon className="h-5 w-5 text-brand" />
+                <p className="mt-3 text-xs font-semibold">{label as string}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="text-xs text-brand-foreground/50">Ambiente interno e seguro</p>
       </section>
 
-      <section className="flex items-center justify-center p-6">
-        <div className="w-full max-w-sm">
+      <section className="flex items-center justify-center px-6 py-12 sm:px-10">
+        <div className="w-full max-w-md">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
             <Logo size={40} />
-            <span className="text-lg font-extrabold">3D Create</span>
+            <span className="font-display text-base font-bold">Painel operacional</span>
           </div>
-          <h2 className="text-2xl font-bold tracking-tight">Acessar o sistema</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Use seu e-mail e senha.</p>
+          <p className="mb-3 font-display text-xs font-bold uppercase text-primary">Área restrita</p>
+          <h2 className="font-display text-3xl font-bold">Acessar o sistema</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Entre com suas credenciais de acesso.</p>
 
           <form
             className="mt-6 space-y-4"
@@ -115,8 +132,8 @@ function AuthPage() {
           >
             <Field id="email" label="E-mail" type="email" value={email} onChange={setEmail} />
             <Field id="senha" label="Senha" type="password" value={password} onChange={setPassword} />
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Entrando..." : "Entrar"}
+            <Button type="submit" className="mt-2 w-full" disabled={loading}>
+              {loading ? "Entrando..." : <>Entrar <ArrowRight className="h-4 w-4" /></>}
             </Button>
             <p className="text-center text-xs text-muted-foreground">
               Apenas administradores podem criar novos usuários.

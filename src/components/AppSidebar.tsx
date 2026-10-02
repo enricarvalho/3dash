@@ -61,14 +61,14 @@ const items = [
 export function useDarkMode() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
-    const saved = localStorage.getItem("3dc-theme") === "dark";
+    const saved = localStorage.getItem("workspace-theme") === "dark";
     setDark(saved);
     document.documentElement.classList.toggle("dark", saved);
   }, []);
   const toggle = () => {
     const next = !dark;
     setDark(next);
-    localStorage.setItem("3dc-theme", next ? "dark" : "light");
+    localStorage.setItem("workspace-theme", next ? "dark" : "light");
     document.documentElement.classList.toggle("dark", next);
   };
   return { dark, toggle };

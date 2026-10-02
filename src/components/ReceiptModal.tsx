@@ -69,7 +69,7 @@ export function ReceiptModal({ saleId, open, onOpenChange }: Props) {
         <DialogHeader className="shrink-0 space-y-1 border-b px-6 py-4 text-left">
           <DialogTitle>Recibo {data ? `nº ${data.number}` : "da venda"}</DialogTitle>
           <DialogDescription>
-            Pré-visualização do PDF oficial da 3D Create. Role o documento para ver todas as páginas.
+            Pré-visualização do documento. Role para ver todas as páginas.
           </DialogDescription>
         </DialogHeader>
 

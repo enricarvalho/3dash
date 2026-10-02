@@ -84,13 +84,13 @@ function Consent() {
       <div className="w-full max-w-md rounded-xl border bg-card p-6 shadow-sm">
         <div className="flex items-center gap-3">
           <Logo size={40} />
-          <span className="text-lg font-extrabold">3D Create</span>
+          <span className="font-display text-lg font-bold">Painel operacional</span>
         </div>
         <h1 className="mt-6 text-xl font-bold tracking-tight">
           Conectar {clientName} à sua conta
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          {clientName} poderá acessar os dados da 3D Create (estoque, clientes, peças, orçamentos,
+          {clientName} poderá acessar os dados da sua operação (estoque, clientes, peças, orçamentos,
           vendas e financeiro) em seu nome, com as mesmas permissões da sua conta.
         </p>
         {error && (
