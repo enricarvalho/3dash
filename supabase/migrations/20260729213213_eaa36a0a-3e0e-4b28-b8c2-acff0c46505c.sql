@@ -1,0 +1,2 @@
+ALTER TABLE public.assets DROP CONSTRAINT IF EXISTS assets_printer_id_fkey;
+ALTER TABLE public.assets ADD CONSTRAINT assets_printer_id_fkey FOREIGN KEY (printer_id) REFERENCES public.printers(id) ON DELETE SET NULL;

@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://3dcreate.com.br";
+// TODO: replace with your project URL once a project name or custom domain is set.
+const BASE_URL = "";
 
 interface SitemapEntry {
   path: string;
@@ -14,11 +15,8 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const entries: SitemapEntry[] = [
-          { path: "/", changefreq: "weekly", priority: "1.0" },
-          { path: "/impressao-3d-goiania", changefreq: "weekly", priority: "0.9" },
-          { path: "/search-console", changefreq: "monthly", priority: "0.3" },
-        ];
+        // Only the public sign-in surface is indexable; every module is behind auth.
+        const entries: SitemapEntry[] = [{ path: "/", changefreq: "monthly", priority: "1.0" }];
 
         const urls = entries.map((e) =>
           [

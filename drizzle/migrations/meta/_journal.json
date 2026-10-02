@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790894972899,
+      "tag": "0000_cash_closings_setup",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790895084236,
+      "tag": "0001_partners_setup",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790895540169,
+      "tag": "0002_closed_month_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790896042653,
+      "tag": "0003_guard_cash_closings_order",
+      "breakpoints": true
+    }
+  ]
+}

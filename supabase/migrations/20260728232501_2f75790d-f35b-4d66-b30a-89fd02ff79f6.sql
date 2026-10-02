@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.sync_printer_hours_from_part() FROM PUBLIC, anon, authenticated;

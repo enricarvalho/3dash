@@ -1,0 +1,1 @@
+ALTER TABLE public.part_materials ADD COLUMN IF NOT EXISTS units numeric;
