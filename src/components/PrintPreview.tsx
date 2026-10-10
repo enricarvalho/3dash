@@ -4,6 +4,7 @@ import { dateBR } from "@/lib/format";
 
 type ContactData = {
   company?: string;
+  logo_url?: string | null;
   contact_email?: string;
   contact_phone?: string;
   contact_instagram?: string;
@@ -39,7 +40,7 @@ export function PrintPreview({ data, subtitle = "Orçamento #0001", meta = "Clie
         {/* Header */}
         <div className="flex items-start justify-between gap-3 border-b border-slate-200 px-4 pb-3 pt-4">
           <div className="flex items-center gap-2">
-            <Logo size={28} />
+            <Logo size={28} src={data.logo_url} />
             <div className="leading-tight">
               <p className="text-[11px] font-extrabold tracking-tight">{company}</p>
               <div className="mt-0.5 space-y-[1px] text-[6px] text-slate-500">

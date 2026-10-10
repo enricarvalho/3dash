@@ -51,7 +51,7 @@ import {
   type Regime,
 } from "@/lib/dre";
 import { downloadDrePdf } from "@/lib/dre-pdf";
-import { useCompanyProfile } from "@/hooks/use-company-profile";
+import { useCompanyPdfLogo, useCompanyProfile } from "@/hooks/use-company-profile";
 import { brl, dateBR, downloadCSV, num } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { pageTitle } from "@/lib/brand";
@@ -180,6 +180,7 @@ function DrePage() {
   const tx = useQuery({ queryKey: ["transactions"], queryFn: listTransactions });
   const customers = useQuery({ queryKey: ["customers"], queryFn: listCustomers });
   const profile = useCompanyProfile();
+  const pdfLogo = useCompanyPdfLogo();
 
   const [regime, setRegime] = useState<Regime>("competencia");
   const [preset, setPreset] = useState<PeriodoPreset>("mes");
@@ -260,6 +261,7 @@ function DrePage() {
                   serie,
                   periodoLabel,
                   company: profile.data?.company,
+                  logo: pdfLogo.data,
                 })
               }
             >

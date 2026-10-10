@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ImagePlus, Loader2, X } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -15,6 +16,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useSaveRecord } from "@/hooks/use-crud";
 import { companyName, pageTitle } from "@/lib/brand";
+import { removeCompanyLogo, uploadCompanyLogo } from "@/lib/company-logo";
+import { ACCEPT_ATTR, MAX_FILE_MB } from "@/lib/image-upload";
 
 export const Route = createFileRoute("/_authenticated/configuracoes")({
   head: () => ({
@@ -93,6 +96,50 @@ function ConfiguracoesPage() {
     );
   };
 
+  const logoUrl = profile.data?.logo_url ?? null;
+  const logoInputRef = useRef<HTMLInputElement>(null);
+  const [logoBusy, setLogoBusy] = useState(false);
+
+  /** A logo é salva no perfil na hora (não depende de "Salvar alterações"). */
+  const saveLogo = async (url: string | null) => {
+    const id = profile.data?.id;
+    if (!id) return;
+    const { error } = await supabase.from("profiles").update({ logo_url: url }).eq("id", id);
+    if (error) throw new Error(error.message);
+    await qc.invalidateQueries({ queryKey: ["profiles", "me"] });
+  };
+
+  const handleLogoFile = async (file?: File | null) => {
+    if (!file) return;
+    setLogoBusy(true);
+    const previous = logoUrl;
+    try {
+      const url = await uploadCompanyLogo(file);
+      await saveLogo(url);
+      if (previous) await removeCompanyLogo(previous).catch(() => undefined);
+      toast.success("Logo atualizada");
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setLogoBusy(false);
+      if (logoInputRef.current) logoInputRef.current.value = "";
+    }
+  };
+
+  const removeLogo = async () => {
+    if (!logoUrl) return;
+    setLogoBusy(true);
+    try {
+      await saveLogo(null);
+      await removeCompanyLogo(logoUrl).catch(() => undefined);
+      toast.success("Logo removida");
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setLogoBusy(false);
+    }
+  };
+
   const [pwd, setPwd] = useState({ current: "", next: "", confirm: "" });
   const [savingPwd, setSavingPwd] = useState(false);
 
@@ -131,12 +178,53 @@ function ConfiguracoesPage() {
         <div className="rounded-xl border bg-card p-5">
 
         <div className="flex items-center gap-3">
-          <Logo />
+          <Logo src={logoUrl} />
           <div>
             <p className="font-semibold">{companyName(form.company)}</p>
             <p className="text-sm text-muted-foreground">
               Nome e contatos usados nos orçamentos, recibos e relatórios.
             </p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-sm font-semibold">Logo da empresa</h3>
+          <p className="text-xs text-muted-foreground">
+            Aparece no menu lateral, nos orçamentos, recibos, relatórios e PDFs. Prefira PNG com fundo
+            transparente (até {MAX_FILE_MB} MB).
+          </p>
+          <input
+            ref={logoInputRef}
+            type="file"
+            accept={ACCEPT_ATTR}
+            className="hidden"
+            onChange={(e) => handleLogoFile(e.target.files?.[0])}
+          />
+          <div className="mt-3 flex items-center gap-4">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg border bg-muted/40 p-2">
+              {logoUrl ? (
+                <img src={logoUrl} alt="Logo da empresa" className="h-full w-full object-contain" />
+              ) : (
+                <ImagePlus className="h-6 w-6 text-muted-foreground" />
+              )}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={logoBusy || !profile.data?.id}
+                onClick={() => logoInputRef.current?.click()}
+              >
+                {logoBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
+                {logoUrl ? "Trocar logo" : "Enviar logo"}
+              </Button>
+              {logoUrl && (
+                <Button type="button" variant="ghost" size="sm" disabled={logoBusy} onClick={removeLogo}>
+                  <X className="h-4 w-4" /> Remover
+                </Button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -347,7 +435,7 @@ function ConfiguracoesPage() {
         </div>
 
         <div className="lg:sticky lg:top-4 lg:self-start">
-          <PrintPreview data={form} />
+          <PrintPreview data={{ ...form, logo_url: logoUrl }} />
         </div>
       </div>
     </div>

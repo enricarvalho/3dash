@@ -41,7 +41,7 @@ import {
 } from "@/lib/cash-closing";
 import { reopenMonth } from "@/lib/cash-closing-db";
 import { downloadCashClosingPdf } from "@/lib/cash-closing-pdf";
-import { useCompanyProfile } from "@/hooks/use-company-profile";
+import { useCompanyPdfLogo, useCompanyProfile } from "@/hooks/use-company-profile";
 import { brl, dateBR } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { pageTitle } from "@/lib/brand";
@@ -299,6 +299,7 @@ function ClosingDetails({
   const qc = useQueryClient();
   const { ownerName } = useOwners();
   const profile = useCompanyProfile();
+  const pdfLogo = useCompanyPdfLogo();
   const [reopening, setReopening] = useState(false);
   const [reason, setReason] = useState("");
 
@@ -359,7 +360,12 @@ function ClosingDetails({
           <Button
             variant="outline"
             onClick={() =>
-              downloadCashClosingPdf(closing, ownerName(closing.closed_by), profile.data?.company)
+              downloadCashClosingPdf(
+                closing,
+                ownerName(closing.closed_by),
+                profile.data?.company,
+                pdfLogo.data,
+              )
             }
             disabled={closing.status !== "fechado"}
           >

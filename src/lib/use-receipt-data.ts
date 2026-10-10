@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { useCompanyProfile } from "@/hooks/use-company-profile";
+import { useCompanyPdfLogo, useCompanyProfile } from "@/hooks/use-company-profile";
 import { companyName, footerText } from "@/lib/brand";
 import { getCustomer, getSale, listSaleItems } from "@/lib/db";
 import { dateBR } from "@/lib/format";
@@ -27,12 +27,14 @@ export function useReceiptData(saleId: string | null | undefined) {
     enabled: enabled && !!sale.data?.customer_id,
   });
   const profile = useCompanyProfile();
+  const pdfLogo = useCompanyPdfLogo();
 
   const isLoading =
     enabled &&
     (sale.isLoading ||
       items.isLoading ||
       profile.isLoading ||
+      pdfLogo.isLoading ||
       (!!sale.data?.customer_id && customer.isLoading));
 
   const data = React.useMemo<ReceiptData | null>(() => {
@@ -44,6 +46,7 @@ export function useReceiptData(saleId: string | null | undefined) {
     const subtotal = list.reduce((t, i) => t + Number(i.quantity) * Number(i.unit_price), 0);
     return {
       company: companyName(p?.company),
+      logo: pdfLogo.data,
       contactLines: [
         [p?.contact_email, p?.contact_phone].filter(Boolean).join(" · "),
         [p?.contact_instagram, p?.contact_website].filter(Boolean).join(" · "),
@@ -77,7 +80,7 @@ export function useReceiptData(saleId: string | null | undefined) {
       total: Number(s.total) || 0,
       notes: s.notes,
     };
-  }, [sale.data, items.data, customer.data, profile.data]);
+  }, [sale.data, items.data, customer.data, profile.data, pdfLogo.data]);
 
   return { data, isLoading, notFound: enabled && !sale.isLoading && !sale.data };
 }

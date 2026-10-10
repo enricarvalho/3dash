@@ -814,6 +814,7 @@ export type Database = {
           default_energy_price_kwh: number
           default_printer_watts: number
           full_name: string | null
+          logo_url: string | null
           id: string
           min_margin_pct: number
           pdf_footer_text: string | null
@@ -831,6 +832,7 @@ export type Database = {
           default_energy_price_kwh?: number
           default_printer_watts?: number
           full_name?: string | null
+          logo_url?: string | null
           id: string
           min_margin_pct?: number
           pdf_footer_text?: string | null
@@ -848,6 +850,7 @@ export type Database = {
           default_energy_price_kwh?: number
           default_printer_watts?: number
           full_name?: string | null
+          logo_url?: string | null
           id?: string
           min_margin_pct?: number
           pdf_footer_text?: string | null
