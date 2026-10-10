@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf";
 
+import type { PdfLogo } from "@/lib/company-logo";
 import type { CashClosing } from "@/lib/db";
 import {
   CLOSING_METHODS,
@@ -24,13 +25,14 @@ export function downloadCashClosingPdf(
   c: CashClosing,
   closedByName: string,
   company?: string | null,
+  logo?: PdfLogo | null,
 ) {
   const ym = c.month.slice(0, 7);
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const setText = (col: readonly number[]) => doc.setTextColor(col[0], col[1], col[2]);
 
   gradientRect(doc, 0, 0, PAGE_W, 30);
-  drawBrandLockup(doc, LEFT, 9, 90, company);
+  drawBrandLockup(doc, LEFT, 9, 90, company, logo);
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);

@@ -26,7 +26,7 @@ export function PrintHeader({ subtitle, meta }: Props) {
       <style>{`@media print { @page { @bottom-left { content: "${escapeForCssContent(footerText)}"; } } }`}</style>
       <header className="mb-6 hidden items-start justify-between gap-6 border-b pb-4 print:flex">
         <div className="flex items-center gap-3">
-          <Logo size={44} />
+          <Logo size={44} src={data?.logo_url} />
           <div className="leading-tight">
             <p className="text-lg font-extrabold tracking-tight">{company}</p>
             <div className="mt-1 space-y-0.5 text-[10px] text-muted-foreground">

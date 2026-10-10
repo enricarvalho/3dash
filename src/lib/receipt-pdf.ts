@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 
 import { BRAND, companyName } from "./brand";
+import type { PdfLogo } from "./company-logo";
 
 
 export type ReceiptItem = {
@@ -11,6 +12,7 @@ export type ReceiptItem = {
 
 export type ReceiptData = {
   company: string;
+  logo?: PdfLogo | null;
   contactLines: string[];
   footerText: string;
   number: string;
@@ -71,19 +73,39 @@ export function gradientRect(doc: jsPDF, x: number, y: number, w: number, h: num
   }
 }
 
-/** Marca no topo do PDF: nome da empresa em branco sobre a faixa. Retorna a altura usada. */
+/**
+ * Marca no topo do PDF: logo da empresa num selo branco (quando houver) e o nome
+ * em branco sobre a faixa. Retorna a altura usada.
+ */
 export function drawBrandLockup(
   doc: jsPDF,
   x: number,
   y: number,
   w: number,
   company?: string | null,
+  logo?: PdfLogo | null,
 ) {
+  let textX = x;
+  if (logo) {
+    const pad = 1.5;
+    const slotH = 14;
+    const ratio = logo.width / logo.height;
+    const imgH = Math.min(slotH - pad * 2, 36 / ratio);
+    const imgW = imgH * ratio;
+    const boxW = imgW + pad * 2;
+    const boxH = imgH + pad * 2;
+    const boxY = y - 4 + (slotH - boxH) / 2;
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(x, boxY, boxW, boxH, 2, 2, "F");
+    doc.addImage(logo.dataUrl, "PNG", x + pad, boxY + pad, imgW, imgH, undefined, "FAST");
+    textX = x + boxW + 4;
+  }
+
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(15);
-  const lines = doc.splitTextToSize(companyName(company), w) as string[];
-  doc.text(lines.slice(0, 2), x, y + 6);
+  const lines = doc.splitTextToSize(companyName(company), w - (textX - x)) as string[];
+  doc.text(lines.slice(0, 2), textX, y + 6);
   return 6 + (Math.min(lines.length, 2) - 1) * 6;
 }
 
@@ -99,7 +121,7 @@ export function buildSaleReceiptPdf(data: ReceiptData) {
   /* ---------- cabeçalho institucional (todas as páginas) ---------- */
   const drawBand = () => {
     gradientRect(doc, 0, 0, PAGE_W, BAND_H);
-    drawBrandLockup(doc, M.left, BAND_H / 2 - 4, 80, data.company);
+    drawBrandLockup(doc, M.left, BAND_H / 2 - 4, 80, data.company, data.logo);
 
     const infoW = rightX - (M.left + 80 + 10);
     const infoLines: string[] = data.contactLines.filter(Boolean).flatMap((l) => wrap(l, infoW));

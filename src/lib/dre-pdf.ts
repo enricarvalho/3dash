@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf";
 
+import type { PdfLogo } from "@/lib/company-logo";
 import type { ContasAReceber, DREMonthlyPoint, DREResult } from "@/lib/dre";
 import { INK, LINE, MUTED, drawBrandLockup, gradientRect, money } from "@/lib/receipt-pdf";
 
@@ -18,6 +19,7 @@ export function downloadDrePdf({
   serie,
   periodoLabel,
   company,
+  logo,
 }: {
   result: DREResult;
   anterior: DREResult;
@@ -25,13 +27,14 @@ export function downloadDrePdf({
   serie: DREMonthlyPoint[];
   periodoLabel: string;
   company?: string | null;
+  logo?: PdfLogo | null;
 }) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const setText = (c: readonly number[]) => doc.setTextColor(c[0], c[1], c[2]);
   const prev = new Map(anterior.rows.map((r) => [r.id, r.value]));
 
   gradientRect(doc, 0, 0, PAGE_W, 30);
-  drawBrandLockup(doc, LEFT, 9, 90, company);
+  drawBrandLockup(doc, LEFT, 9, 90, company, logo);
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);
